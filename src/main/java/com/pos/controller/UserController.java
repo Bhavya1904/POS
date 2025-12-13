@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/user")
+@RequestMapping("/api/users")
 public class UserController {
 
     private final UserService userService;
@@ -26,7 +26,7 @@ public class UserController {
     @GetMapping("/{id}")
     public ResponseEntity<UserDto> getUserById(
             @RequestHeader("Authorization") String jwt,
-            @PathVariable Long id) {
+            @PathVariable Long id) throws Exception {
 
         User user = userService.getUserById(id);
 
