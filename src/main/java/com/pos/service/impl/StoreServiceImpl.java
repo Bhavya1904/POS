@@ -1,5 +1,6 @@
 package com.pos.service.impl;
 
+import com.pos.domain.StoreStatus;
 import com.pos.exception.UserException;
 import com.pos.mapper.StoreMapper;
 import com.pos.model.Store;
@@ -38,7 +39,7 @@ public class StoreServiceImpl implements StoreService {
     }
 
     @Override
-    public List<StoreDto> getAllStore() {
+    public List<StoreDto> getAllStores() {
         List<Store> dtos = storeRepository.findAll();
         return dtos.stream().map(StoreMapper::toDTO).collect(Collectors.toList());
     }
@@ -92,5 +93,16 @@ public class StoreServiceImpl implements StoreService {
             throw new UserException("You don't have permission to access this store");
         }
         return StoreMapper.toDTO(currentUser.getStore());
+    }
+
+//    this method is for
+    @Override
+    public StoreDto moderateStore(Long id, StoreStatus storeStatus) throws Exception {
+        Store store = storeRepository.findById(id).orElseThrow(
+                () -> new Exception("Store not found")
+        );
+        Store updatedStore = storeRepository.save(store);
+
+        return StoreMapper.toDTO(updatedStore);
     }
 }

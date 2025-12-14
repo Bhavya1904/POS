@@ -1,5 +1,6 @@
 package com.pos.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.pos.domain.StoreStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -34,6 +35,7 @@ public class Store {
     private StoreStatus status;
 
     @Embedded
+    @JsonProperty("storeContact")
     private StoreContact contact = new StoreContact();
 
     @PrePersist
