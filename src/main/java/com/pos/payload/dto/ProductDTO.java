@@ -1,0 +1,41 @@
+package com.pos.payload.dto;
+
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.time.LocalDateTime;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+
+public class ProductDTO {
+    private Long id;
+
+    private String name;
+
+    private String sku; // this is unique identifier for inventory requirement
+
+    private String description;
+
+    private Double mrp;
+
+    private Double sellingPrice;
+
+    private String brand;
+
+    private String image;
+
+//    private Category category;
+    private Long categoryId;
+
+    private Long storeId;
+
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+
+}
