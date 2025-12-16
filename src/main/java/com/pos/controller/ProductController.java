@@ -36,7 +36,7 @@ public class ProductController {
     @GetMapping("/store/{storeId}")
     public ResponseEntity<List<ProductDTO>> getByStoreId(
             @PathVariable Long storeId,
-            @RequestHeader("Authorization") String jwt) throws Exception {
+            @RequestHeader("Authorization") String jwt) {
         return ResponseEntity.ok(
                 productService.getProductsByStoreId(
                         storeId
@@ -63,7 +63,7 @@ public class ProductController {
     public ResponseEntity<List<ProductDTO>> searchByKeyword(
             @PathVariable Long storeId,
             @RequestParam String keyword,
-            @RequestHeader("Authorization") String jwt) throws Exception {
+            @RequestHeader("Authorization") String jwt) {
         return ResponseEntity.ok(
                 productService.searchByKeyword(
                         storeId, keyword
@@ -80,7 +80,7 @@ public class ProductController {
         productService.deleteProduct(id,user);
 
         ApiResponse apiResponse = new ApiResponse();
-        apiResponse.setMessage("Product deleted succesfully");
+        apiResponse.setMessage("Product deleted successfully");
 
         return ResponseEntity.ok(apiResponse);
     }

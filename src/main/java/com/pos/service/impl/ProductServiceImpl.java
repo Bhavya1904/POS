@@ -1,10 +1,12 @@
 package com.pos.service.impl;
 
 import com.pos.mapper.ProductMapper;
+import com.pos.model.Category;
 import com.pos.model.Product;
 import com.pos.model.Store;
 import com.pos.model.User;
 import com.pos.payload.dto.ProductDTO;
+import com.pos.repository.CategoryRepository;
 import com.pos.repository.ProductRepository;
 import com.pos.repository.StoreRepository;
 import com.pos.service.ProductService;
@@ -21,6 +23,7 @@ public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
     private final StoreRepository storeRepository;
+    private final CategoryRepository categoryRepository;
 
     @Override
     public ProductDTO createProduct(ProductDTO productDTO, User user) throws Exception {
@@ -28,7 +31,11 @@ public class ProductServiceImpl implements ProductService {
             ).orElseThrow(
                 () -> new Exception("Store not found"));
 
-        Product product = ProductMapper.toEntity(productDTO, store);
+        Category category = categoryRepository.findById(
+                productDTO.getCategoryId()).orElseThrow(
+                    () -> new Exception("Category not found")
+        );
+        Product product = ProductMapper.toEntity(productDTO, store, category);
         Product savedProduct = productRepository.save(product);
         return ProductMapper.toDTO(savedProduct);
     }
@@ -39,6 +46,7 @@ public class ProductServiceImpl implements ProductService {
                 () -> new Exception("Product not found")
         );
 
+
         product.setName(productDTO.getName());
         product.setDescription(productDTO.getDescription());
         product.setSku(productDTO.getSku());
@@ -47,6 +55,17 @@ public class ProductServiceImpl implements ProductService {
         product.setSellingPrice(productDTO.getSellingPrice());
         product.setBrand(productDTO.getBrand());
         product.setUpdatedAt(LocalDateTime.now());
+
+        if(productDTO.getCategoryId()!=null){
+            Category category = categoryRepository.findById(
+                    productDTO.getCategoryId()).orElseThrow(
+                    () -> new Exception("Category not found")
+            );
+            if (category!=null){
+                product.setCategory(category);
+            }
+        }
+
 
         Product savedProduct = productRepository.save(product);
 
@@ -77,5 +96,6 @@ public class ProductServiceImpl implements ProductService {
         return products
                 .stream()
                 .map(ProductMapper::toDTO)
-                .collect(Collectors.toList());    }
+                .collect(Collectors.toList());
+    }
 }

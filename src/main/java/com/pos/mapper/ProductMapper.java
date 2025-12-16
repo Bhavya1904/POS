@@ -1,5 +1,6 @@
 package com.pos.mapper;
 
+import com.pos.model.Category;
 import com.pos.model.Product;
 import com.pos.model.Store;
 import com.pos.payload.dto.ProductDTO;
@@ -15,23 +16,23 @@ public class ProductMapper {
                 .mrp(product.getMrp())
                 .sellingPrice(product.getSellingPrice())
                 .brand(product.getBrand())
-//                categoryId(product.getCategoryId())
-                .image(product.getImage())
+                .categoryDTO(product.getCategory() != null ? CategoryMapper.toDTO(product.getCategory()) : null)                .image(product.getImage())
                 .storeId(product.getStore()!=null?product.getStore().getId():null)
                 .createdAt(product.getCreatedAt())
                 .updatedAt(product.getUpdatedAt())
                 .build();
     }
 
-    public static Product toEntity(ProductDTO productDTO, Store store) {
+    public static Product toEntity(ProductDTO productDTO, Store store, Category category) {
         return Product.builder()
                 .name(productDTO.getName())
+                .store(store)
+                .category(category)
                 .sku(productDTO.getSku())
                 .description(productDTO.getDescription())
                 .mrp(productDTO.getMrp())
                 .sellingPrice(productDTO.getSellingPrice())
                 .brand(productDTO.getBrand())
-                //.category(ProductDTO.getCategory())
                 .build();
     }
 }

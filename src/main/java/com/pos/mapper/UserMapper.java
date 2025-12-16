@@ -1,12 +1,12 @@
 package com.pos.mapper;
 
 import com.pos.model.User;
-import com.pos.payload.dto.UserDto;
+import com.pos.payload.dto.UserDTO;
 
 public class UserMapper {
 
-    public static UserDto toDTO(User savedUser) {
-        UserDto userDto = new UserDto();
+    public static UserDTO toDTO(User savedUser) {
+        UserDTO userDto = new UserDTO();
         userDto.setFullName(savedUser.getFullName());
         userDto.setId(savedUser.getId());
         userDto.setEmail(savedUser.getEmail());

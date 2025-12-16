@@ -6,6 +6,7 @@ import com.pos.repository.UserRepository;
 import com.pos.service.JwtService;
 import com.pos.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
@@ -29,13 +30,20 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getCurrentUser() throws UserException {
-        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null || !authentication.isAuthenticated()) {
+            throw new UserException("User is not authenticated");
+        }
+
+        String email = authentication.getName();
         User user = userRepository.findByEmail(email);
+
         if (user == null) {
             throw new UserException("User not found");
         }
         return user;
     }
+
 
     @Override
     public User getUserByEmail(String email) throws UserException {

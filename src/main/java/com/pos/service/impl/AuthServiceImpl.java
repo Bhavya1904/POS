@@ -4,7 +4,7 @@ import com.pos.domain.UserRole;
 import com.pos.exception.UserException;
 import com.pos.mapper.UserMapper;
 import com.pos.model.User;
-import com.pos.payload.dto.UserDto;
+import com.pos.payload.dto.UserDTO;
 import com.pos.payload.response.AuthResponse;
 import com.pos.repository.UserRepository;
 import com.pos.service.AuthService;
@@ -31,7 +31,7 @@ public class AuthServiceImpl implements AuthService {
     private final CustomUserImplementation customUserImplementation;
 
     @Override
-    public AuthResponse signup(UserDto userDto) throws UserException {
+    public AuthResponse signup(UserDTO userDto) throws UserException {
         User user = userRepository.findByEmail(userDto.getEmail());
         if (user != null) {
             throw new UserException("Email already registered");
@@ -68,7 +68,7 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public AuthResponse login(UserDto userDto) throws UserException {
+    public AuthResponse login(UserDTO userDto) throws UserException {
         String email = userDto.getEmail();
         String password = userDto.getPassword();
         Authentication authentication = authenticate(email, password);

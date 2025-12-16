@@ -4,7 +4,7 @@ import com.pos.domain.StoreStatus;
 import com.pos.exception.UserException;
 import com.pos.mapper.StoreMapper;
 import com.pos.model.User;
-import com.pos.payload.dto.StoreDto;
+import com.pos.payload.dto.StoreDTO;
 import com.pos.payload.response.ApiResponse;
 import com.pos.service.StoreService;
 import com.pos.service.UserService;
@@ -23,39 +23,39 @@ public class StoreController {
     private final UserService userService;
 
     @PostMapping
-    public ResponseEntity<StoreDto> createStore(
-            @RequestBody StoreDto storeDto,
+    public ResponseEntity<StoreDTO> createStore(
+            @RequestBody StoreDTO storeDto,
             @RequestHeader("Authorization") String jwt) throws UserException {
         User user = userService.getUserFromJwtToken(jwt);
 
         return ResponseEntity.ok(storeService.createStore(storeDto, user));
     }
     @GetMapping("/{id}")
-    public ResponseEntity<StoreDto> getStoreById(
+    public ResponseEntity<StoreDTO> getStoreById(
             @PathVariable Long id,
             @RequestHeader("Authorization") String jwt) throws Exception {
         return ResponseEntity.ok(storeService.getStoreById(id));
     }
     @GetMapping
-    public ResponseEntity<List<StoreDto>> getAllStore(
+    public ResponseEntity<List<StoreDTO>> getAllStore(
             @RequestHeader("Authorization") String jwt) throws Exception {
         return ResponseEntity.ok(storeService.getAllStores());
     }
     @GetMapping("/admin")
-    public ResponseEntity<StoreDto> getStoreByAdmin(
+    public ResponseEntity<StoreDTO> getStoreByAdmin(
             @RequestHeader("Authorization") String jwt) throws Exception {
         return ResponseEntity.ok(StoreMapper.toDTO(storeService.getStoreByAdmin()));
     }
     @GetMapping("/employee")
-    public ResponseEntity<StoreDto> getStoreByEmployee(
+    public ResponseEntity<StoreDTO> getStoreByEmployee(
             @RequestHeader("Authorization") String jwt) throws Exception {
         return ResponseEntity.ok(storeService.getStoreByEmployee());
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<StoreDto> updateStore(
+    public ResponseEntity<StoreDTO> updateStore(
             @PathVariable Long id,
-            @RequestBody StoreDto storeDto) throws Exception {
+            @RequestBody StoreDTO storeDto) throws Exception {
         return ResponseEntity.ok(storeService.updateStore(id, storeDto));
     }
 
@@ -69,7 +69,7 @@ public class StoreController {
     }
 
     @PutMapping("/{id}/moderate")
-    public ResponseEntity<StoreDto> moderateStore(
+    public ResponseEntity<StoreDTO> moderateStore(
             @PathVariable Long id,
             @RequestParam StoreStatus storeStatus) throws Exception {
         return ResponseEntity.ok(storeService.moderateStore(id, storeStatus));

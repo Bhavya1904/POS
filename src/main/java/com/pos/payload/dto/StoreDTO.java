@@ -7,12 +7,12 @@ import lombok.Data;
 import java.time.LocalDateTime;
 
 @Data
-public class StoreDto {
+public class StoreDTO {
     private Long id;
 
     private String brand;
 
-    private UserDto storeAdmin;
+    private UserDTO storeAdmin;
 
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;

@@ -2,12 +2,12 @@ package com.pos.mapper;
 
 import com.pos.model.Store;
 import com.pos.model.User;
-import com.pos.payload.dto.StoreDto;
+import com.pos.payload.dto.StoreDTO;
 
 public class StoreMapper {
 
-    public static StoreDto toDTO(Store store) {
-        StoreDto storeDto = new StoreDto();
+    public static StoreDTO toDTO(Store store) {
+        StoreDTO storeDto = new StoreDTO();
 
         storeDto.setId(store.getId());
         storeDto.setBrand(store.getBrand());
@@ -22,7 +22,7 @@ public class StoreMapper {
         return storeDto;
     }
 
-    public static Store toEntity(StoreDto storeDto, User storeAdmin) {
+    public static Store toEntity(StoreDTO storeDto, User storeAdmin) {
         Store store = new Store();
         store.setId(storeDto.getId());
         store.setBrand(storeDto.getBrand());
