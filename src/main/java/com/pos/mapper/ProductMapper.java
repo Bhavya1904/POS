@@ -16,8 +16,19 @@ public class ProductMapper {
                 .mrp(product.getMrp())
                 .sellingPrice(product.getSellingPrice())
                 .brand(product.getBrand())
-                .categoryDTO(product.getCategory() != null ? CategoryMapper.toDTO(product.getCategory()) : null)                .image(product.getImage())
-                .storeId(product.getStore()!=null?product.getStore().getId():null)
+                .categoryDTO(
+                        product.getCategory() != null
+                                ? CategoryMapper.toDTO(product.getCategory())
+                                : null)
+                .image(product.getImage())
+                .storeId(product.getStore()!=null
+                                ? product.getStore().getId()
+                                : null)
+                .categoryId(
+                        product.getCategory() != null
+                                ? product.getCategory().getId()
+                                : null
+                )
                 .createdAt(product.getCreatedAt())
                 .updatedAt(product.getUpdatedAt())
                 .build();
@@ -33,6 +44,7 @@ public class ProductMapper {
                 .mrp(productDTO.getMrp())
                 .sellingPrice(productDTO.getSellingPrice())
                 .brand(productDTO.getBrand())
+                .image(productDTO.getImage())
                 .build();
     }
 }

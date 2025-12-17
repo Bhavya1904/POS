@@ -57,7 +57,7 @@ public class CategoryServiceImpl implements CategoryService {
         );
         User user = userService.getCurrentUser();
 
-        category.setName(category.getName());
+        category.setName(dto.getName());
         checkAuthority(user, category.getStore());
 
         return CategoryMapper.toDTO(categoryRepository.save(category));
