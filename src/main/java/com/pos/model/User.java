@@ -29,6 +29,9 @@ public class User {
     private String email;
 
     @ManyToOne
+    private Branch branch;
+
+    @ManyToOne
     private Store store;
 
     private String phone;

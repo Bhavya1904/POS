@@ -1,5 +1,7 @@
 package com.pos.mapper;
 
+import com.pos.model.Branch;
+import com.pos.model.Store;
 import com.pos.model.User;
 import com.pos.payload.dto.UserDTO;
 
@@ -17,4 +19,21 @@ public class UserMapper {
         userDto.setLastLogin(savedUser.getLastLogin());
         return userDto;
     }
+
+    public static User toEntity(UserDTO userDTO) {
+        User createdUser = new User();
+        createdUser.setEmail(userDTO.getEmail());
+        createdUser.setFullName(userDTO.getFullName());
+        createdUser.setRole(userDTO.getRole());
+        createdUser.setCreatedAt(userDTO.getCreatedAt());
+        createdUser.setUpdatedAt(userDTO.getUpdatedAt());
+        createdUser.setLastLogin(userDTO.getLastLogin());
+        createdUser.setPhone(userDTO.getPhone());
+        createdUser.setPassword(userDTO.getPassword());
+
+        return createdUser;
+    }
 }
+
+
+
