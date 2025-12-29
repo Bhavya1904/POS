@@ -10,9 +10,9 @@ public interface EmployeeService {
 
     UserDTO createStoreEmployee(UserDTO employee, Long storeId) throws Exception;
     UserDTO createBranchEmployee(UserDTO employee, Long branchId) throws Exception;
-    User updateEmployee(Long employeeId, UserDTO employeeDetails) throws Exception;
+    UserDTO updateEmployee(Long employeeId, UserDTO employeeDetails) throws Exception;
     void deleteEmployee(Long employeeId) throws Exception;
-    List<User> findAllEmployeesByStoreId(Long storeId, UserRole role) throws Exception;
-    List<User> findAllEmployeesByBranchId(Long branchId, UserRole role) throws Exception;
+    List<UserDTO> findAllEmployeesByStoreId(Long storeId, UserRole role) throws Exception;
+    List<UserDTO> findAllEmployeesByBranchId(Long branchId, UserRole role) throws Exception;
 
 }

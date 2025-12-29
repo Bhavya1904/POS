@@ -33,14 +33,14 @@ public class EmployeeServiceImpl implements EmployeeService {
         );
         Branch branch = null;
 
-        if(employee.getRole()==UserRole.ROLE_STORE_ADMIN){
-            if(employee.getBranchId() == null) {
+        if (employee.getRole() == UserRole.ROLE_BRANCH_MANAGER) {
+            if (employee.getBranchId() == null) {
                 throw new Exception("Branch id is required to create branch manager");
             }
-            branch = branchRepository.findById(employee.getBranchId()).orElseThrow(
-                    () -> new Exception("Branch not found")
-            );
+            branch = branchRepository.findById(employee.getBranchId())
+                    .orElseThrow(() -> new Exception("Branch not found"));
         }
+
 
         User user = UserMapper.toEntity(employee);
         user.setStore(store);
@@ -65,6 +65,7 @@ public class EmployeeServiceImpl implements EmployeeService {
                 employee.getRole() == UserRole.ROLE_BRANCH_MANAGER) {
             User user = UserMapper.toEntity(employee);
             user.setBranch(branch);
+            user.setStore(branch.getStore());
             user.setPassword(passwordEncoder.encode(employee.getPassword()));
             return UserMapper.toDTO(userRepository.save(user));
         }
@@ -72,7 +73,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public User updateEmployee(Long employeeId, UserDTO employeeDetails) throws Exception {
+    public UserDTO updateEmployee(Long employeeId, UserDTO employeeDetails) throws Exception {
         User existingEmployee = userRepository.findById(employeeId).orElseThrow(
                 () -> new RuntimeException("Employee not found")
         );
@@ -80,13 +81,21 @@ public class EmployeeServiceImpl implements EmployeeService {
                 () -> new Exception("Branch not found")
         );
 
-        existingEmployee.setEmail(employeeDetails.getEmail());
-        existingEmployee.setFullName(employeeDetails.getFullName());
+        if (employeeDetails.getEmail() != null)
+            existingEmployee.setEmail(employeeDetails.getEmail());
+
+        if (employeeDetails.getFullName() != null)
+            existingEmployee.setFullName(employeeDetails.getFullName());
+
+        if (employeeDetails.getPhone() != null)
+            existingEmployee.setPhone(employeeDetails.getPhone());
+
+        if (employeeDetails.getRole() != null)
+            existingEmployee.setRole(employeeDetails.getRole());
+
         existingEmployee.setPassword(employeeDetails.getPassword());
-        existingEmployee.setPhone(employeeDetails.getPhone());
-        existingEmployee.setRole(employeeDetails.getRole());
         existingEmployee.setBranch(branch);
-        return userRepository.save(existingEmployee);
+        return UserMapper.toDTO(userRepository.save(existingEmployee));
     }
 
     @Override
@@ -98,24 +107,26 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public List<User> findAllEmployeesByStoreId(Long storeId, UserRole role) throws Exception {
+    public List<UserDTO> findAllEmployeesByStoreId(Long storeId, UserRole role) throws Exception {
         Store store = storeRepository.findById(storeId).orElseThrow(
                 () -> new Exception("Store not found")
         );
         return userRepository.findByStore(store)
                 .stream().filter(
                         user -> role == null || user.getRole() == role
-                ).collect(Collectors.toList());
+                ).map(UserMapper::toDTO)
+                .collect(Collectors.toList());
     }
 
     @Override
-    public List<User> findAllEmployeesByBranchId(Long branchId, UserRole role) throws Exception {
+    public List<UserDTO> findAllEmployeesByBranchId(Long branchId, UserRole role) throws Exception {
         Branch branch = branchRepository.findById(branchId).orElseThrow(
                 () -> new Exception("Branch not found")
         );
         return userRepository.findByBranchId(branchId)
                 .stream().filter(
                         user -> role == null || user.getRole() == role
-                ).collect(Collectors.toList());
+                ).map(UserMapper::toDTO)
+                .collect(Collectors.toList());
     }
 }

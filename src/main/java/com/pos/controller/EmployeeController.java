@@ -35,14 +35,14 @@ public class EmployeeController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<User> updateEmployee(
+    public ResponseEntity<UserDTO> updateEmployee(
             @RequestBody UserDTO userDTO,
             @PathVariable Long id) throws Exception {
-        User employee = employeeService.updateEmployee(id, userDTO);
+        UserDTO employee = employeeService.updateEmployee(id, userDTO);
         return ResponseEntity.ok(employee);
     }
     @DeleteMapping("/{id}")
-    public ResponseEntity<ApiResponse> updateEmployee(
+    public ResponseEntity<ApiResponse> deleteEmployee(
             @PathVariable Long id) throws Exception {
         employeeService.deleteEmployee(id);
 
@@ -53,18 +53,18 @@ public class EmployeeController {
     }
 
     @GetMapping("/store/{storeId}")
-    public ResponseEntity<List<User>> storeEmployees(
+    public ResponseEntity<List<UserDTO>> storeEmployees(
             @PathVariable Long storeId,
             @RequestParam(required = false)UserRole userRole) throws Exception {
-        List<User> employee = employeeService.findAllEmployeesByStoreId(storeId, userRole);
+        List<UserDTO> employee = employeeService.findAllEmployeesByStoreId(storeId, userRole);
         return ResponseEntity.ok(employee);
     }
 
     @GetMapping("/branch/{branchId}")
-    public ResponseEntity<List<User>> branchEmployees(
+    public ResponseEntity<List<UserDTO>> branchEmployees(
             @PathVariable Long branchId,
             @RequestParam(required = false)UserRole userRole) throws Exception {
-        List<User> employee = employeeService.findAllEmployeesByBranchId(branchId, userRole);
+        List<UserDTO> employee = employeeService.findAllEmployeesByBranchId(branchId, userRole);
         return ResponseEntity.ok(employee);
     }
 
