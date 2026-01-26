@@ -1,10 +1,12 @@
 package com.pos.payload.dto;
 
 import com.pos.model.Order;
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
+
 @Data
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class OrderItemDTO {
     private Long id;
 

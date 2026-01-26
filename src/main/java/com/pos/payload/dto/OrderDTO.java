@@ -3,14 +3,15 @@ package com.pos.payload.dto;
 import com.pos.domain.PaymentType;
 import com.pos.model.Customer;
 
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class OrderDTO {
     private Long id;
 
@@ -18,7 +19,7 @@ public class OrderDTO {
 
     private LocalDateTime createdAt;
 
-    private long branchId;
+    private Long branchId;
     private BranchDTO branch;
 
     private UserDTO cashier;

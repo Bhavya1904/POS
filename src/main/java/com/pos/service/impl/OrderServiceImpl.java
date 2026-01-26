@@ -5,6 +5,7 @@ import com.pos.domain.PaymentType;
 import com.pos.mapper.OrderMapper;
 import com.pos.model.*;
 import com.pos.payload.dto.OrderDTO;
+import com.pos.repository.OrderItemRepository;
 import com.pos.repository.OrderRepository;
 import com.pos.repository.ProductRepository;
 import com.pos.service.OrderService;
@@ -24,6 +25,7 @@ public class OrderServiceImpl implements OrderService {
     private final OrderRepository orderRepository;
     private final UserServiceImpl userService;
     private final ProductRepository productRepository;
+    private final OrderItemRepository orderItemRepository;
 
     @Override
     public OrderDTO createOrder(OrderDTO orderDTO) throws Exception {
@@ -40,6 +42,7 @@ public class OrderServiceImpl implements OrderService {
                 .customer(orderDTO.getCustomer())
                 .paymentType(orderDTO.getPaymentType())
                 .build();
+
 
         List<OrderItem> orderItems = orderDTO.getItems().stream().map(
                 itemDto -> {
